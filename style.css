@@ -64,6 +64,16 @@ h2 {
     font-size: 1.8rem;
 }
 
+/* Rendre le titre principal cliquable */
+#main-title-button {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#main-title-button:hover {
+    color: #3498db; /* Change la couleur au survol */
+}
+
 /* ... (Le reste de votre fichier CSS reste identique) ... */
 
 p {
@@ -422,3 +432,4 @@ button {
         align-items: center;
     }
 }
+
