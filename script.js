@@ -188,6 +188,8 @@ const syllabeResultatEl = document.getElementById('syllabe-resultat');
 
 // Vocabulaire
 const vocabRetourMenuBtn = document.getElementById('vocab-retour-menu');
+// ... (juste après la ligne 'const vocabRetourMenuBtn = ...')
+const mainTitleButton = document.getElementById('main-title-button'); // NOUVEAU
 const vocabTablePhrasesBody = document.querySelector('#vocab-table-phrases tbody');
 
 
@@ -507,7 +509,8 @@ btnVocab.addEventListener('click', () => {
 });
 
 // Boutons "Retour Menu"
-[memoryRetourMenuBtn, quizRetourMenuBtn, syllabeRetourMenuBtn, vocabRetourMenuBtn].forEach(btn => {
+// Boutons "Retour Menu" (y compris le titre)
+[memoryRetourMenuBtn, quizRetourMenuBtn, syllabeRetourMenuBtn, vocabRetourMenuBtn, mainTitleButton].forEach(btn => {
     btn.addEventListener('click', () => {
         if (quizInterval) clearInterval(quizInterval); // Arrête le timer du quiz si on quitte
         afficherEcran(menuPrincipal);
@@ -529,3 +532,4 @@ syllabePiocheButton.addEventListener('click', piocherSyllabe);
 // --- DÉMARRAGE DU JEU ---
 setLanguage(currentLanguage); // Applique la langue par défaut au chargement
 afficherEcran(menuPrincipal);
+
