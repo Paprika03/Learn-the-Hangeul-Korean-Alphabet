@@ -16,7 +16,7 @@
             <button id="btn-memory" class="mode-button">🧠 Mémory (Niveau 1)</button>
             <button id="btn-quiz" class="mode-button">⚡ Quiz Éclair (Niveau 1)</button>
             <button id="btn-syllabe" class="mode-button">🎣 Pêche aux Syllabes (Niveaux 1 & 2)</button>
-            <p class="description-mode">Sélectionnez un mode pour commencer l'apprentissage !</p>
+            <button id="btn-vocab" class="mode-button">📚 Dictionnaire Hangeul</button> <p class="description-mode">Sélectionnez un mode pour commencer l'apprentissage !</p>
         </section>
 
         <section id="jeu-memory" class="ecran-jeu hidden">
@@ -61,6 +61,186 @@
             <p class="syllabe-info">Dites la syllabe à voix haute (ici : "Ga")</p>
         </section>
 
-    </div> <script src="script.js"></script>
+        <section id="ecran-vocab" class="ecran-jeu hidden">
+            <h2>📚 Dictionnaire Hangeul</h2>
+            <div class="info-bar">
+                <button id="vocab-retour-menu" class="retour-menu-button">Menu Principal</button>
+            </div>
+
+            <div class="vocab-container">
+                
+                <h3>Consonnes de base (14)</h3>
+                <table class="vocab-table">
+                    <tr>
+                        <td>ㄱ</td><td>g / k</td>
+                        <td>ㄴ</td><td>n</td>
+                    </tr>
+                    <tr>
+                        <td>ㄷ</td><td>d / t</td>
+                        <td>ㄹ</td><td>r / l</td>
+                    </tr>
+                    <tr>
+                        <td>ㅁ</td><td>m</td>
+                        <td>ㅂ</td><td>b / p</td>
+                    </tr>
+                    <tr>
+                        <td>ㅅ</td><td>s</td>
+                        <td>ㅇ</td><td>ng / silencieux</td>
+                    </tr>
+                    <tr>
+                        <td>ㅈ</td><td>j</td>
+                        <td>ㅊ</td><td>ch</td>
+                    </tr>
+                    <tr>
+                        <td>ㅋ</td><td>k (aspiré)</td>
+                        <td>ㅌ</td><td>t (aspiré)</td>
+                    </tr>
+                    <tr>
+                        <td>ㅍ</td><td>p (aspiré)</td>
+                        <td>ㅎ</td><td>h</td>
+                    </tr>
+                </table>
+
+                <h3>Consonnes doubles (5)</h3>
+                <table class="vocab-table">
+                    <tr>
+                        <td>ㄲ</td><td>kk (dur)</td>
+                        <td>ㄸ</td><td>tt (dur)</td>
+                    </tr>
+                    <tr>
+                        <td>ㅃ</td><td>pp (dur)</td>
+                        <td>ㅆ</td><td>ss (dur)</td>
+                    </tr>
+                    <tr>
+                        <td>ㅉ</td><td>jj (dur)</td>
+                        <td></td><td></td>
+                    </tr>
+                </table>
+
+                <h3>Voyelles de base (10)</h3>
+                <table class="vocab-table">
+                    <tr>
+                        <td>ㅏ</td><td>a</td>
+                        <td>ㅑ</td><td>ya</td>
+                    </tr>
+                    <tr>
+                        <td>ㅓ</td><td>eo</td>
+                        <td>ㅕ</td><td>yeo</td>
+                    </tr>
+                    <tr>
+                        <td>ㅗ</td><td>o</td>
+                        <td>ㅛ</td><td>yo</td>
+                    </tr>
+                    <tr>
+                        <td>ㅜ</td><td>ou (u)</td>
+                        <td>ㅠ</td><td>you (yu)</td>
+                    </tr>
+                    <tr>
+                        <td>ㅡ</td><td>eu</td>
+                        <td>ㅣ</td><td>i</td>
+                    </tr>
+                </table>
+
+                <h3>Voyelles composées (11)</h3>
+                <table class="vocab-table">
+                    <tr>
+                        <td>ㅐ</td><td>ae (è)</td>
+                        <td>ㅒ</td><td>yae (yè)</td>
+                    </tr>
+                    <tr>
+                        <td>ㅔ</td><td>e (é)</td>
+                        <td>ㅖ</td><td>ye (yé)</td>
+                    </tr>
+                    <tr>
+                        <td>ㅘ</td><td>wa</td>
+                        <td>ㅙ</td><td>wae</td>
+                    </tr>
+                    <tr>
+                        <td>ㅚ</td><td>oe (wé)</td>
+                        <td>ㅝ</td><td>wo</td>
+                    </tr>
+                    <tr>
+                        <td>ㅞ</td><td>we</td>
+                        <td>ㅟ</td><td>wi (ui)</td>
+                    </tr>
+                    <tr>
+                        <td>ㅢ</td><td>ui (eui)</td>
+                        <td></td><td></td>
+                    </tr>
+                </table>
+
+                <h3>Phrases et Mots de Base</h3>
+                <table class="vocab-table phrases">
+                    <thead>
+                        <tr>
+                            <th>Hangeul</th>
+                            <th>Romanisation</th>
+                            <th>Français</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>네</td>
+                            <td>Ne</td>
+                            <td>Oui</td>
+                        </tr>
+                        <tr>
+                            <td>아니요</td>
+                            <td>Aniyo</td>
+                            <td>Non</td>
+                        </tr>
+                        <tr>
+                            <td>안녕하세요</td>
+                            <td>Annyeonghaseyo</td>
+                            <td>Bonjour (formel)</td>
+                        </tr>
+                        <tr>
+                            <td>감사합니다</td>
+                            <td>Gamsahamnida</td>
+                            <td>Merci (formel)</td>
+                        </tr>
+                        <tr>
+                            <td>죄송합니다</td>
+                            <td>Joesonghamnida</td>
+                            <td>Désolé (formel)</td>
+                        </tr>
+                        <tr>
+                            <td>주세요</td>
+                            <td>Juseyo</td>
+                            <td>Donnez-moi, s'il vous plaît</td>
+                        </tr>
+                        <tr>
+                            <td>물</td>
+                            <td>Mul</td>
+                            <td>Eau</td>
+                        </tr>
+                        <tr>
+                            <td>커피</td>
+                            <td>Keopi</td>
+                            <td>Café</td>
+                        </tr>
+                        <tr>
+                            <td>이거 뭐예요?</td>
+                            <td>Igeo mwoyeyo?</td>
+                            <td>Qu'est-ce que c'est ?</td>
+                        </tr>
+                        <tr>
+                            <td>안녕히 가세요</td>
+                            <td>Annyeonghi gaseyo</td>
+                            <td>Au revoir (à qqn qui part)</td>
+                        </tr>
+                        <tr>
+                            <td>안녕히 계세요</td>
+                            <td>Annyeonghi gyeseyo</td>
+                            <td>Au revoir (à qqn qui reste)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </div> 
+<script src="script.js"></script>
 </body>
 </html>
