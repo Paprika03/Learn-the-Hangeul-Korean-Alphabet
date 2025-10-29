@@ -27,11 +27,13 @@ const menuPrincipal = document.getElementById('menu-principal');
 const jeuMemory = document.getElementById('jeu-memory');
 const jeuQuiz = document.getElementById('jeu-quiz');
 const jeuSyllabe = document.getElementById('jeu-syllabe');
+const ecranVocab = document.getElementById('ecran-vocab'); // NOUVEAU
 
 // Boutons du menu
 const btnMemory = document.getElementById('btn-memory');
 const btnQuiz = document.getElementById('btn-quiz');
 const btnSyllabe = document.getElementById('btn-syllabe');
+const btnVocab = document.getElementById('btn-vocab'); // NOUVEAU
 
 // Éléments du Mémory
 const plateauJeuMemory = document.getElementById('plateau-jeu-memory');
@@ -55,6 +57,9 @@ const syllabeConsonneEl = document.getElementById('syllabe-consonne');
 const syllabeVoyelleEl = document.getElementById('syllabe-voyelle');
 const syllabeResultatEl = document.getElementById('syllabe-resultat');
 
+// Éléments du Vocabulaire (NOUVEAU)
+const vocabRetourMenuBtn = document.getElementById('vocab-retour-menu');
+
 // --- 3. FONCTIONS UTILITAIRES GLOBALES ---
 
 /** Mélange un tableau (algorithme Fisher-Yates) */
@@ -69,7 +74,8 @@ function melanger(array) {
 
 /** Affiche un écran de jeu et cache les autres */
 function afficherEcran(ecranToShow) {
-    const ecrans = [menuPrincipal, jeuMemory, jeuQuiz, jeuSyllabe];
+    // AJOUT DE ecranVocab à la liste
+    const ecrans = [menuPrincipal, jeuMemory, jeuQuiz, jeuSyllabe, ecranVocab]; 
     ecrans.forEach(ecran => {
         if (ecran === ecranToShow) {
             ecran.classList.remove('hidden');
@@ -148,7 +154,7 @@ function verifierPaireMemory() {
 
 function desactiverCartesMemory() {
     memoryPremiereCarte.removeEventListener('click', retournerCarteMemory);
-    memorySecondeCarte.removeEventListener('click', retournerCarteMemory);
+    secondeCarte.removeEventListener('click', retournerCarteMemory);
     memoryPremiereCarte.classList.add('match');
     memorySecondeCarte.classList.add('match');
     reinitialiserTourMemory();
@@ -191,6 +197,7 @@ function initialiserQuiz() {
     quizMessageEl.textContent = '';
     quizCurrentCardEl.textContent = '?';
     quizStartButton.disabled = false;
+    quizStartButton.textContent = 'Démarrer le Quiz'; // S'assurer que le texte est correct
     quizCartes = melanger(NIVEAU_1_VOYELLES.map(v => v.hangeul)); // On ne garde que le Hangeul
     if (quizInterval) clearInterval(quizInterval); // S'assurer qu'aucun timer ne tourne
 }
@@ -201,6 +208,7 @@ function demarrerQuiz() {
     quizIndexCarteActuelle = 0;
     quizScoreEl.textContent = `Score : 0`;
     quizMessageEl.textContent = '';
+    quizStartButton.textContent = 'Prochaine carte'; // Changer le texte du bouton
     prochaineCarteQuiz();
 }
 
@@ -227,18 +235,13 @@ function prochaineCarteQuiz() {
     }, 1000);
 }
 
-// Fonction pour simuler la réponse de l'utilisateur (on pourrait ajouter un champ de saisie)
-// Pour l'instant, c'est juste une démo, le joueur doit dire le son à voix haute.
 function verifierReponseQuiz(reponseUtilisateur) {
     clearInterval(quizInterval); // Arrête le timer
     const carteActuelleHangeul = quizCartes[quizIndexCarteActuelle];
     const paireAttendue = NIVEAU_1_VOYELLES.find(v => v.hangeul === carteActuelleHangeul);
 
-    // Dans un vrai jeu, l'utilisateur taperait la romanisation.
-    // Ici, nous simulons la correction pour démonstration.
-    // Le joueur doit dire la réponse à voix haute.
-    // Pour que le jeu avance, on considérera toujours "correct" pour le moment.
-    const estCorrect = true; // Placeholder: on assume que le joueur a dit la bonne réponse
+    // Pour l'instant, on simule une réponse correcte pour avancer
+    const estCorrect = true; 
 
     if (estCorrect) {
         quizScore++;
@@ -247,6 +250,7 @@ function verifierReponseQuiz(reponseUtilisateur) {
         quizMessageEl.classList.add('correct');
         quizMessageEl.classList.remove('incorrect');
     } else {
+        // (Ce bloc n'est pas atteint pour l'instant)
         quizMessageEl.textContent = `Incorrect ! C'était "${paireAttendue.roman}"`;
         quizMessageEl.classList.add('incorrect');
         quizMessageEl.classList.remove('correct');
@@ -260,20 +264,6 @@ function finQuiz() {
     alert(`Quiz terminé ! Votre score final : ${quizScore} / ${quizCartes.length} 🎉`);
     initialiserQuiz(); // Réinitialise pour un nouveau jeu
 }
-
-// Pour le Quiz, nous avons besoin d'un moyen de passer à la carte suivante
-// Pour le moment, on utilise un bouton de 'start' qui fait aussi office de 'next'
-quizStartButton.addEventListener('click', () => {
-    if (quizStartButton.textContent === 'Démarrer le Quiz') {
-        demarrerQuiz();
-        quizStartButton.textContent = 'Prochaine carte'; // Change le texte du bouton
-    } else {
-        // Si le quiz est déjà en cours, ce bouton permet de "passer"
-        // On considère que le joueur a répondu (correctement pour l'instant)
-        verifierReponseQuiz("dummy_response_correct"); // Simule une réponse correcte
-    }
-});
-
 
 // --- 6. LOGIQUE DU MODE PÊCHE AUX SYLLABES ---
 let syllabeCompteur = 0;
@@ -308,7 +298,6 @@ function piocherSyllabe() {
     syllabeVoyelleEl.textContent = voyelle;
 
     // La formation de la syllabe est simplifiée pour l'affichage
-    // Normalement, il faudrait gérer la complexité des batchim et des jamo
     let resultat = consonne + voyelle;
     // Si la consonne est 'ㅇ' au début, elle est muette, donc on affiche juste la voyelle
     if (consonne === 'ㅇ') {
@@ -347,6 +336,10 @@ btnSyllabe.addEventListener('click', () => {
     initialiserSyllabe();
 });
 
+btnVocab.addEventListener('click', () => { // NOUVEAU
+    afficherEcran(ecranVocab);
+});
+
 // --- Mémory ---
 memoryResetButton.addEventListener('click', initialiserMemory);
 memoryRetourMenuBtn.addEventListener('click', () => {
@@ -355,25 +348,26 @@ memoryRetourMenuBtn.addEventListener('click', () => {
 
 // --- Quiz ---
 quizStartButton.addEventListener('click', () => {
-    // Si le quiz est déjà démarré, le bouton agit comme un "passer"
     if (quizStartButton.textContent === 'Démarrer le Quiz') {
         demarrerQuiz();
-        quizStartButton.textContent = 'Prochaine carte';
     } else {
-        // Pour l'instant, on considère que le joueur a répondu correctement pour avancer
+        // Si le quiz est en cours, ce bouton force la vérification (et passe à la suite)
         verifierReponseQuiz('correct_dummy_response');
     }
 });
 quizRetourMenuBtn.addEventListener('click', () => {
-    // Arrêter le timer avant de quitter le mode
-    if (quizInterval) clearInterval(quizInterval);
+    if (quizInterval) clearInterval(quizInterval); // Arrêter le timer en quittant
     afficherEcran(menuPrincipal);
 });
-
 
 // --- Pêche aux Syllabes ---
 syllabePiocheButton.addEventListener('click', piocherSyllabe);
 syllabeRetourMenuBtn.addEventListener('click', () => {
+    afficherEcran(menuPrincipal);
+});
+
+// --- Vocabulaire (NOUVEAU) ---
+vocabRetourMenuBtn.addEventListener('click', () => {
     afficherEcran(menuPrincipal);
 });
 
