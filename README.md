@@ -14,10 +14,11 @@ HOW TO PLAY
 
 This project is hosted on GitHub Pages. You can play directly in your browser by visiting the following link:
 
-[Insert your GitHub Pages link here]
+[Insert your GitHub Pages link here](https://paprika03.github.io/Learn-the-Hangeul-Korean-Alphabet/)
 
 FILES
 
 * `index.html`: The structure for the web page and the different game screens.
 * `style.css`: All styling for the appearance of cards, menus, and layout.
+
 * `script.js`: All game logic, including mode management, pair matching, and syllable generation.
