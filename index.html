@@ -9,35 +9,42 @@
 <body>
 
     <div id="app">
-        <h1>🇰🇷 Apprenez le Hangeul en vous amusant !</h1>
+
+        <div class="lang-selector">
+            <button id="lang-fr" class="lang-button active">Français</button>
+            <button id="lang-en" class="lang-button">English</button>
+        </div>
+
+        <h1 data-lang-key="main_title">🇰🇷 Apprenez le Hangeul en vous amusant !</h1>
 
         <section id="menu-principal" class="ecran-jeu">
-            <h2>Choisissez un mode de jeu :</h2>
-            <button id="btn-memory" class="mode-button">🧠 Mémory (Niveau 1)</button>
-            <button id="btn-quiz" class="mode-button">⚡ Quiz Éclair (Niveau 1)</button>
-            <button id="btn-syllabe" class="mode-button">🎣 Pêche aux Syllabes (Niveaux 1 & 2)</button>
-            <button id="btn-vocab" class="mode-button">📚 Dictionnaire Hangeul</button> <p class="description-mode">Sélectionnez un mode pour commencer l'apprentissage !</p>
+            <h2 data-lang-key="menu_subtitle">Choisissez un mode de jeu :</h2>
+            <button id="btn-memory" class="mode-button" data-lang-key="menu_memory">🧠 Mémory (Niveau 1)</button>
+            <button id="btn-quiz" class="mode-button" data-lang-key="menu_quiz">⚡ Quiz Éclair (Niveau 1)</button>
+            <button id="btn-syllabe" class="mode-button" data-lang-key="menu_syllable">🎣 Pêche aux Syllabes (Niveaux 1 & 2)</button>
+            <button id="btn-vocab" class="mode-button" data-lang-key="menu_vocab">📚 Dictionnaire Hangeul</button>
+            <p class="description-mode" data-lang-key="menu_description">Sélectionnez un mode pour commencer l'apprentissage !</p>
         </section>
 
         <section id="jeu-memory" class="ecran-jeu hidden">
-            <h2>🧠 Mémory Hangeul (Voyelles de Base)</h2>
-            <p>Associez le caractère Hangeul à sa romanisation.</p>
+            <h2 data-lang-key="memory_title">🧠 Mémory Hangeul (Voyelles de Base)</h2>
+            <p data-lang-key="memory_desc">Associez le caractère Hangeul à sa romanisation.</p>
             <div class="info-bar">
-                <div id="memory-paires-trouvees">Paires : 0 / 6</div>
-                <button id="memory-reset-button">Recommencer</button>
-                <button id="memory-retour-menu" class="retour-menu-button">Menu Principal</button>
+                <div id="memory-paires-trouvees" data-lang-key="pairs_found" data-default-text="Paires : 0 / 6">Paires : 0 / 6</div>
+                <button id="memory-reset-button" data-lang-key="btn_restart">Recommencer</button>
+                <button id="memory-retour-menu" class="retour-menu-button" data-lang-key="btn_menu">Menu Principal</button>
             </div>
             <section id="plateau-jeu-memory"></section>
         </section>
 
         <section id="jeu-quiz" class="ecran-jeu hidden">
-            <h2>⚡ Quiz Éclair (Voyelles de Base)</h2>
-            <p>Dites le son du caractère avant que le temps ne s'écoule !</p>
+            <h2 data-lang-key="quiz_title">⚡ Quiz Éclair (Voyelles de Base)</h2>
+            <p data-lang-key="quiz_desc">Dites le son du caractère avant que le temps ne s'écoule !</p>
             <div class="info-bar">
-                <div id="quiz-score">Score : 0</div>
-                <div id="quiz-timer">Temps : ⌛</div>
-                <button id="quiz-start-button">Démarrer le Quiz</button>
-                <button id="quiz-retour-menu" class="retour-menu-button">Menu Principal</button>
+                <div id="quiz-score" data-lang-key="score" data-default-text="Score : 0">Score : 0</div>
+                <div id="quiz-timer" data-lang-key="time_left" data-default-text="Temps : ⌛">Temps : ⌛</div>
+                <button id="quiz-start-button" data-lang-key="btn_start_quiz">Démarrer le Quiz</button>
+                <button id="quiz-retour-menu" class="retour-menu-button" data-lang-key="btn_menu">Menu Principal</button>
             </div>
             <div id="quiz-carte-container">
                 <div id="quiz-current-card" class="quiz-card">?</div>
@@ -46,195 +53,77 @@
         </section>
 
         <section id="jeu-syllabe" class="ecran-jeu hidden">
-            <h2>🎣 Pêche aux Syllabes (Voyelles & Consonnes)</h2>
-            <p>Formez des syllabes simples avec les cartes piochées.</p>
+            <h2 data-lang-key="syllable_title">🎣 Pêche aux Syllabes (Voyelles & Consonnes)</h2>
+            <p data-lang-key="syllable_desc">Formez des syllabes simples avec les cartes piochées.</p>
             <div class="info-bar">
-                <div id="syllabe-compteur">Syllabes : 0</div>
-                <button id="syllabe-pioche-button">Piocher</button>
-                <button id="syllabe-retour-menu" class="retour-menu-button">Menu Principal</button>
+                <div id="syllabe-compteur" data-lang-key="syllables_built" data-default-text="Syllabes : 0">Syllabes : 0</div>
+                <button id="syllabe-pioche-button" data-lang-key="btn_draw">Piocher</button>
+                <button id="syllabe-retour-menu" class="retour-menu-button" data-lang-key="btn_menu">Menu Principal</button>
             </div>
             <div id="syllabe-cards-container">
                 <div id="syllabe-consonne" class="syllabe-card syllabe-consonne">ㄱ</div>
                 <div id="syllabe-voyelle" class="syllabe-card syllabe-voyelle">ㅏ</div>
                 <div id="syllabe-resultat" class="syllabe-card syllabe-resultat">가</div>
             </div>
-            <p class="syllabe-info">Dites la syllabe à voix haute (ici : "Ga")</p>
+            <p class="syllabe-info" data-lang-key="syllable_info">Dites la syllabe à voix haute (ici : "Ga")</p>
         </section>
 
         <section id="ecran-vocab" class="ecran-jeu hidden">
-            <h2>📚 Dictionnaire Hangeul</h2>
+            <h2 data-lang-key="vocab_title">📚 Dictionnaire Hangeul</h2>
             <div class="info-bar">
-                <button id="vocab-retour-menu" class="retour-menu-button">Menu Principal</button>
+                <button id="vocab-retour-menu" class="retour-menu-button" data-lang-key="btn_menu">Menu Principal</button>
             </div>
 
             <div class="vocab-container">
                 
-                <h3>Consonnes de base (14)</h3>
+                <h3 data-lang-key="vocab_consonants_basic">Consonnes de base (14)</h3>
                 <table class="vocab-table">
-                    <tr>
-                        <td>ㄱ</td><td>g / k</td>
-                        <td>ㄴ</td><td>n</td>
-                    </tr>
-                    <tr>
-                        <td>ㄷ</td><td>d / t</td>
-                        <td>ㄹ</td><td>r / l</td>
-                    </tr>
-                    <tr>
-                        <td>ㅁ</td><td>m</td>
-                        <td>ㅂ</td><td>b / p</td>
-                    </tr>
-                    <tr>
-                        <td>ㅅ</td><td>s</td>
-                        <td>ㅇ</td><td>ng / silencieux</td>
-                    </tr>
-                    <tr>
-                        <td>ㅈ</td><td>j</td>
-                        <td>ㅊ</td><td>ch</td>
-                    </tr>
-                    <tr>
-                        <td>ㅋ</td><td>k (aspiré)</td>
-                        <td>ㅌ</td><td>t (aspiré)</td>
-                    </tr>
-                    <tr>
-                        <td>ㅍ</td><td>p (aspiré)</td>
-                        <td>ㅎ</td><td>h</td>
-                    </tr>
+                    <tr><td>ㄱ</td><td>g / k</td><td>ㄴ</td><td>n</td></tr>
+                    <tr><td>ㄷ</td><td>d / t</td><td>ㄹ</td><td>r / l</td></tr>
+                    <tr><td>ㅁ</td><td>m</td><td>ㅂ</td><td>b / p</td></tr>
+                    <tr><td>ㅅ</td><td>s</td><td>ㅇ</td><td>ng / silencieux</td></tr>
+                    <tr><td>ㅈ</td><td>j</td><td>ㅊ</td><td>ch</td></tr>
+                    <tr><td>ㅋ</td><td>k (aspiré)</td><td>ㅌ</td><td>t (aspiré)</td></tr>
+                    <tr><td>ㅍ</td><td>p (aspiré)</td><td>ㅎ</td><td>h</td></tr>
                 </table>
 
-                <h3>Consonnes doubles (5)</h3>
+                <h3 data-lang-key="vocab_consonants_double">Consonnes doubles (5)</h3>
                 <table class="vocab-table">
-                    <tr>
-                        <td>ㄲ</td><td>kk (dur)</td>
-                        <td>ㄸ</td><td>tt (dur)</td>
-                    </tr>
-                    <tr>
-                        <td>ㅃ</td><td>pp (dur)</td>
-                        <td>ㅆ</td><td>ss (dur)</td>
-                    </tr>
-                    <tr>
-                        <td>ㅉ</td><td>jj (dur)</td>
-                        <td></td><td></td>
-                    </tr>
+                    <tr><td>ㄲ</td><td>kk (dur)</td><td>ㄸ</td><td>tt (dur)</td></tr>
+                    <tr><td>ㅃ</td><td>pp (dur)</td><td>ㅆ</td><td>ss (dur)</td></tr>
+                    <tr><td>ㅉ</td><td>jj (dur)</td><td></td><td></td></tr>
                 </table>
 
-                <h3>Voyelles de base (10)</h3>
+                <h3 data-lang-key="vocab_vowels_basic">Voyelles de base (10)</h3>
                 <table class="vocab-table">
-                    <tr>
-                        <td>ㅏ</td><td>a</td>
-                        <td>ㅑ</td><td>ya</td>
-                    </tr>
-                    <tr>
-                        <td>ㅓ</td><td>eo</td>
-                        <td>ㅕ</td><td>yeo</td>
-                    </tr>
-                    <tr>
-                        <td>ㅗ</td><td>o</td>
-                        <td>ㅛ</td><td>yo</td>
-                    </tr>
-                    <tr>
-                        <td>ㅜ</td><td>ou (u)</td>
-                        <td>ㅠ</td><td>you (yu)</td>
-                    </tr>
-                    <tr>
-                        <td>ㅡ</td><td>eu</td>
-                        <td>ㅣ</td><td>i</td>
-                    </tr>
+                    <tr><td>ㅏ</td><td>a</td><td>ㅑ</td><td>ya</td></tr>
+                    <tr><td>ㅓ</td><td>eo</td><td>ㅕ</td><td>yeo</td></tr>
+                    <tr><td>ㅗ</td><td>o</td><td>ㅛ</td><td>yo</td></tr>
+                    <tr><td>ㅜ</td><td>ou (u)</td><td>ㅠ</td><td>you (yu)</td></tr>
+                    <tr><td>ㅡ</td><td>eu</td><td>ㅣ</td><td>i</td></tr>
                 </table>
 
-                <h3>Voyelles composées (11)</h3>
+                <h3 data-lang-key="vocab_vowels_compound">Voyelles composées (11)</h3>
                 <table class="vocab-table">
-                    <tr>
-                        <td>ㅐ</td><td>ae (è)</td>
-                        <td>ㅒ</td><td>yae (yè)</td>
-                    </tr>
-                    <tr>
-                        <td>ㅔ</td><td>e (é)</td>
-                        <td>ㅖ</td><td>ye (yé)</td>
-                    </tr>
-                    <tr>
-                        <td>ㅘ</td><td>wa</td>
-                        <td>ㅙ</td><td>wae</td>
-                    </tr>
-                    <tr>
-                        <td>ㅚ</td><td>oe (wé)</td>
-                        <td>ㅝ</td><td>wo</td>
-                    </tr>
-                    <tr>
-                        <td>ㅞ</td><td>we</td>
-                        <td>ㅟ</td><td>wi (ui)</td>
-                    </tr>
-                    <tr>
-                        <td>ㅢ</td><td>ui (eui)</td>
-                        <td></td><td></td>
-                    </tr>
+                    <tr><td>ㅐ</td><td>ae (è)</td><td>ㅒ</td><td>yae (yè)</td></tr>
+                    <tr><td>ㅔ</td><td>e (é)</td><td>ㅖ</td><td>ye (yé)</td></tr>
+                    <tr><td>ㅘ</td><td>wa</td><td>ㅙ</td><td>wae</td></tr>
+                    <tr><td>ㅚ</td><td>oe (wé)</td><td>ㅝ</td><td>wo</td></tr>
+                    <tr><td>ㅞ</td><td>we</td><td>ㅟ</td><td>wi (ui)</td></tr>
+                    <tr><td>ㅢ</td><td>ui (eui)</td><td></td><td></td></tr>
                 </table>
 
-                <h3>Phrases et Mots de Base</h3>
-                <table class="vocab-table phrases">
+                <h3 data-lang-key="vocab_phrases">Phrases et Mots de Base</h3>
+                <table id="vocab-table-phrases" class="vocab-table phrases">
                     <thead>
                         <tr>
-                            <th>Hangeul</th>
-                            <th>Romanisation</th>
-                            <th>Français</th>
+                            <th data-lang-key="vocab_hangeul">Hangeul</th>
+                            <th data-lang-key="vocab_roman">Romanisation</th>
+                            <th data-lang-key="vocab_meaning">Signification</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>네</td>
-                            <td>Ne</td>
-                            <td>Oui</td>
-                        </tr>
-                        <tr>
-                            <td>아니요</td>
-                            <td>Aniyo</td>
-                            <td>Non</td>
-                        </tr>
-                        <tr>
-                            <td>안녕하세요</td>
-                            <td>Annyeonghaseyo</td>
-                            <td>Bonjour (formel)</td>
-                        </tr>
-                        <tr>
-                            <td>감사합니다</td>
-                            <td>Gamsahamnida</td>
-                            <td>Merci (formel)</td>
-                        </tr>
-                        <tr>
-                            <td>죄송합니다</td>
-                            <td>Joesonghamnida</td>
-                            <td>Désolé (formel)</td>
-                        </tr>
-                        <tr>
-                            <td>주세요</td>
-                            <td>Juseyo</td>
-                            <td>Donnez-moi, s'il vous plaît</td>
-                        </tr>
-                        <tr>
-                            <td>물</td>
-                            <td>Mul</td>
-                            <td>Eau</td>
-                        </tr>
-                        <tr>
-                            <td>커피</td>
-                            <td>Keopi</td>
-                            <td>Café</td>
-                        </tr>
-                        <tr>
-                            <td>이거 뭐예요?</td>
-                            <td>Igeo mwoyeyo?</td>
-                            <td>Qu'est-ce que c'est ?</td>
-                        </tr>
-                        <tr>
-                            <td>안녕히 가세요</td>
-                            <td>Annyeonghi gaseyo</td>
-                            <td>Au revoir (à qqn qui part)</td>
-                        </tr>
-                        <tr>
-                            <td>안녕히 계세요</td>
-                            <td>Annyeonghi gyeseyo</td>
-                            <td>Au revoir (à qqn qui reste)</td>
-                        </tr>
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
 
