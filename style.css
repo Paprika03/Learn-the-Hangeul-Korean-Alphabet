@@ -265,6 +265,81 @@ button {
     font-size: 1.1rem;
 }
 
+/* --- Styles pour le Dictionnaire (NOUVEAU) --- */
+#btn-vocab {
+    background-color: #1abc9c; /* Sarcelle */
+}
+
+#btn-vocab:hover {
+    background-color: #16a085;
+}
+
+.vocab-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.vocab-container h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 5px;
+}
+
+.vocab-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.vocab-table td {
+    border: 1px solid #dfe6e9;
+    padding: 12px;
+    font-size: 1.1rem;
+    width: 25%; /* 4 cellules par ligne */
+}
+
+.vocab-table td:nth-child(odd) {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #34495e;
+    text-align: center;
+}
+
+/* Style spécifique pour la table des phrases */
+.vocab-table.phrases {
+    text-align: left;
+}
+
+.vocab-table.phrases thead th {
+    background-color: #f0f4f8;
+    padding: 12px;
+    border-bottom: 2px solid #bdc3c7;
+}
+
+.vocab-table.phrases tbody td {
+    width: auto; /* Réinitialise la largeur */
+    font-size: 1rem;
+    text-align: left;
+}
+
+.vocab-table.phrases td:first-child {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #34495e;
+}
+
+/* Ajustement pour la barre d'info du vocabulaire */
+#ecran-vocab .info-bar {
+    justify-content: center; /* Centre le bouton retour */
+    max-width: 700px;
+}
+
 /* --- Media Queries pour la réactivité --- */
 @media (max-width: 600px) {
     h1 {
