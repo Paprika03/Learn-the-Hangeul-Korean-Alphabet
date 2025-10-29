@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu Hangeul Complet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app">
+        <h1>🇰🇷 Apprenez le Hangeul en vous amusant !</h1>
+
+        <section id="menu-principal" class="ecran-jeu">
+            <h2>Choisissez un mode de jeu :</h2>
+            <button id="btn-memory" class="mode-button">🧠 Mémory (Niveau 1)</button>
+            <button id="btn-quiz" class="mode-button">⚡ Quiz Éclair (Niveau 1)</button>
+            <button id="btn-syllabe" class="mode-button">🎣 Pêche aux Syllabes (Niveaux 1 & 2)</button>
+            <p class="description-mode">Sélectionnez un mode pour commencer l'apprentissage !</p>
+        </section>
+
+        <section id="jeu-memory" class="ecran-jeu hidden">
+            <h2>🧠 Mémory Hangeul (Voyelles de Base)</h2>
+            <p>Associez le caractère Hangeul à sa romanisation.</p>
+            <div class="info-bar">
+                <div id="memory-paires-trouvees">Paires : 0 / 6</div>
+                <button id="memory-reset-button">Recommencer</button>
+                <button id="memory-retour-menu" class="retour-menu-button">Menu Principal</button>
+            </div>
+            <section id="plateau-jeu-memory"></section>
+        </section>
+
+        <section id="jeu-quiz" class="ecran-jeu hidden">
+            <h2>⚡ Quiz Éclair (Voyelles de Base)</h2>
+            <p>Dites le son du caractère avant que le temps ne s'écoule !</p>
+            <div class="info-bar">
+                <div id="quiz-score">Score : 0</div>
+                <div id="quiz-timer">Temps : ⌛</div>
+                <button id="quiz-start-button">Démarrer le Quiz</button>
+                <button id="quiz-retour-menu" class="retour-menu-button">Menu Principal</button>
+            </div>
+            <div id="quiz-carte-container">
+                <div id="quiz-current-card" class="quiz-card">?</div>
+                <div id="quiz-message" class="quiz-message"></div>
+            </div>
+        </section>
+
+        <section id="jeu-syllabe" class="ecran-jeu hidden">
+            <h2>🎣 Pêche aux Syllabes (Voyelles & Consonnes)</h2>
+            <p>Formez des syllabes simples avec les cartes piochées.</p>
+            <div class="info-bar">
+                <div id="syllabe-compteur">Syllabes : 0</div>
+                <button id="syllabe-pioche-button">Piocher</button>
+                <button id="syllabe-retour-menu" class="retour-menu-button">Menu Principal</button>
+            </div>
+            <div id="syllabe-cards-container">
+                <div id="syllabe-consonne" class="syllabe-card syllabe-consonne">ㄱ</div>
+                <div id="syllabe-voyelle" class="syllabe-card syllabe-voyelle">ㅏ</div>
+                <div id="syllabe-resultat" class="syllabe-card syllabe-resultat">가</div>
+            </div>
+            <p class="syllabe-info">Dites la syllabe à voix haute (ici : "Ga")</p>
+        </section>
+
+    </div> <script src="script.js"></script>
+</body>
+</html>
