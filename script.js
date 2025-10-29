@@ -1,6 +1,132 @@
 // script.js
 
-// --- 1. DONNÉES DU JEU ---
+// --- 0. TRADUCTIONS (i18n) ---
+const translations = {
+    fr: {
+        // Menu Principal
+        main_title: "🇰🇷 Apprenez le Hangeul en vous amusant !",
+        menu_subtitle: "Choisissez un mode de jeu :",
+        menu_memory: "🧠 Mémory (Niveau 1)",
+        menu_quiz: "⚡ Quiz Éclair (Niveau 1)",
+        menu_syllable: "🎣 Pêche aux Syllabes (Niveaux 1 & 2)",
+        menu_vocab: "📚 Dictionnaire Hangeul",
+        menu_description: "Sélectionnez un mode pour commencer l'apprentissage !",
+        // Boutons
+        btn_restart: "Recommencer",
+        btn_menu: "Menu Principal",
+        btn_start_quiz: "Démarrer le Quiz",
+        btn_next_card: "Prochaine carte",
+        btn_draw: "Piocher",
+        // Textes de jeu
+        pairs_found: "Paires",
+        score: "Score",
+        time_left: "Temps",
+        syllables_built: "Syllabes",
+        // Mode Mémory
+        memory_title: "🧠 Mémory Hangeul (Voyelles de Base)",
+        memory_desc: "Associez le caractère Hangeul à sa romanisation.",
+        memory_congrats: "Félicitations ! Vous avez maîtrisé le Mémory des Voyelles de Base ! 🎉",
+        // Mode Quiz
+        quiz_title: "⚡ Quiz Éclair (Voyelles de Base)",
+        quiz_desc: "Dites le son du caractère avant que le temps ne s'écoule !",
+        quiz_correct: "Correct ! C'est",
+        quiz_incorrect: "Incorrect ! C'était",
+        quiz_complete: "Quiz terminé ! Votre score final :",
+        // Mode Syllabe
+        syllable_title: "🎣 Pêche aux Syllabes (Voyelles & Consonnes)",
+        syllable_desc: "Formez des syllabes simples avec les cartes piochées.",
+        syllable_info: 'Dites la syllabe à voix haute (ici : "Ga")',
+        syllable_all_drawn: "Vous avez épuisé toutes les combinaisons de base ! Recommencez pour de nouvelles syllabes.",
+        // Dictionnaire
+        vocab_title: "📚 Dictionnaire Hangeul",
+        vocab_consonants_basic: "Consonnes de base (14)",
+        vocab_consonants_double: "Consonnes doubles (5)",
+        vocab_vowels_basic: "Voyelles de base (10)",
+        vocab_vowels_compound: "Voyelles composées (11)",
+        vocab_phrases: "Phrases et Mots de Base",
+        vocab_hangeul: "Hangeul",
+        vocab_roman: "Romanisation",
+        vocab_meaning: "Signification",
+        // Données des phrases (pour génération dynamique)
+        vocab_data: [
+            { h: "네", r: "Ne", m: "Oui" },
+            { h: "아니요", r: "Aniyo", m: "Non" },
+            { h: "안녕하세요", r: "Annyeonghaseyo", m: "Bonjour (formel)" },
+            { h: "감사합니다", r: "Gamsahamnida", m: "Merci (formel)" },
+            { h: "죄송합니다", r: "Joesonghamnida", m: "Désolé (formel)" },
+            { h: "주세요", r: "Juseyo", m: "Donnez-moi, s'il vous plaît" },
+            { h: "물", r: "Mul", m: "Eau" },
+            { h: "커피", r: "Keopi", m: "Café" },
+            { h: "이거 뭐예요?", r: "Igeo mwoyeyo?", m: "Qu'est-ce que c'est ?" },
+            { h: "안녕히 가세요", r: "Annyeonghi gaseyo", m: "Au revoir (à qqn qui part)" },
+            { h: "안녕히 계세요", r: "Annyeonghi gyeseyo", m: "Au revoir (à qqn qui reste)" },
+        ]
+    },
+    en: {
+        // Main Menu
+        main_title: "🇰🇷 Learn Hangeul with Fun!",
+        menu_subtitle: "Choose a game mode:",
+        menu_memory: "🧠 Memory Game (Level 1)",
+        menu_quiz: "⚡ Flash Quiz (Level 1)",
+        menu_syllable: "🎣 Syllable Builder (Level 1 & 2)",
+        menu_vocab: "📚 Hangeul Dictionary",
+        menu_description: "Select a mode to start learning!",
+        // Buttons
+        btn_restart: "Restart",
+        btn_menu: "Main Menu",
+        btn_start_quiz: "Start Quiz",
+        btn_next_card: "Next Card",
+        btn_draw: "Draw",
+        // Game Text
+        pairs_found: "Pairs",
+        score: "Score",
+        time_left: "Time",
+        syllables_built: "Syllables",
+        // Memory Mode
+        memory_title: "🧠 Hangeul Memory (Basic Vowels)",
+        memory_desc: "Match the Hangeul character to its romanization.",
+        memory_congrats: "Congratulations! You've mastered the Basic Vowels Memory Game! 🎉",
+        // Quiz Mode
+        quiz_title: "⚡ Flash Quiz (Basic Vowels)",
+        quiz_desc: "Say the character's sound before the time runs out!",
+        quiz_correct: "Correct! It's",
+        quiz_incorrect: "Incorrect! It was",
+        quiz_complete: "Quiz complete! Your final score:",
+        // Syllable Mode
+        syllable_title: "🎣 Syllable Builder (Vowels & Consonants)",
+        syllable_desc: "Form simple syllables with the drawn cards.",
+        syllable_info: 'Say the syllable out loud (e.g., "Ga")',
+        syllable_all_drawn: "You've used all basic combinations! Restarting for new syllables.",
+        // Dictionary
+        vocab_title: "📚 Hangeul Dictionary",
+        vocab_consonants_basic: "Basic Consonants (14)",
+        vocab_consonants_double: "Double Consonants (5)",
+        vocab_vowels_basic: "Basic Vowels (10)",
+        vocab_vowels_compound: "Compound Vowels (11)",
+        vocab_phrases: "Basic Words and Phrases",
+        vocab_hangeul: "Hangeul",
+        vocab_roman: "Romanization",
+        vocab_meaning: "Meaning",
+        // Phrase Data (for dynamic generation)
+        vocab_data: [
+            { h: "네", r: "Ne", m: "Yes" },
+            { h: "아니요", r: "Aniyo", m: "No" },
+            { h: "안녕하세요", r: "Annyeonghaseyo", m: "Hello (formal)" },
+            { h: "감사합니다", r: "Gamsahamnida", m: "Thank you (formal)" },
+            { h: "죄송합니다", r: "Joesonghamnida", m: "Sorry (formal)" },
+            { h: "주세요", r: "Juseyo", m: "Please give me" },
+            { h: "물", r: "Mul", m: "Water" },
+            { h: "커피", r: "Keopi", m: "Coffee" },
+            { h: "이거 뭐예요?", r: "Igeo mwoyeyo?", m: "What is this?" },
+            { h: "안녕히 가세요", r: "Annyeonghi gaseyo", m: "Goodbye (to someone leaving)" },
+            { h: "안녕히 계세요", r: "Annyeonghi gyeseyo", m: "Goodbye (to someone staying)" },
+        ]
+    }
+};
+
+let currentLanguage = 'fr'; // Langue par défaut
+
+// --- 1. DONNÉES DU JEU (Universelles) ---
 const NIVEAU_1_VOYELLES = [
     { hangeul: 'ㅏ', roman: 'a' },
     { hangeul: 'ㅓ', roman: 'eo' },
@@ -18,30 +144,33 @@ const NIVEAU_2_CONSONNES = [
     { hangeul: 'ㅁ', roman: 'm' },
     { hangeul: 'ㅂ', roman: 'b / p' },
     { hangeul: 'ㅅ', roman: 's' },
-    { hangeul: 'ㅇ', roman: 'ng' }, // ou silencieux au début
+    { hangeul: 'ㅇ', roman: 'ng' },
     { hangeul: 'ㅈ', roman: 'j' }
 ];
 
-// --- 2. ÉLÉMENTS DU DOM (Référence à tous les éléments interactifs) ---
+// --- 2. ÉLÉMENTS DU DOM ---
+const langFrButton = document.getElementById('lang-fr');
+const langEnButton = document.getElementById('lang-en');
+
 const menuPrincipal = document.getElementById('menu-principal');
 const jeuMemory = document.getElementById('jeu-memory');
 const jeuQuiz = document.getElementById('jeu-quiz');
 const jeuSyllabe = document.getElementById('jeu-syllabe');
-const ecranVocab = document.getElementById('ecran-vocab'); // NOUVEAU
+const ecranVocab = document.getElementById('ecran-vocab');
 
-// Boutons du menu
+// ... (tous les autres éléments comme avant) ...
 const btnMemory = document.getElementById('btn-memory');
 const btnQuiz = document.getElementById('btn-quiz');
 const btnSyllabe = document.getElementById('btn-syllabe');
-const btnVocab = document.getElementById('btn-vocab'); // NOUVEAU
+const btnVocab = document.getElementById('btn-vocab');
 
-// Éléments du Mémory
+// Mémory
 const plateauJeuMemory = document.getElementById('plateau-jeu-memory');
 const memoryPairesTrouveesEl = document.getElementById('memory-paires-trouvees');
 const memoryResetButton = document.getElementById('memory-reset-button');
 const memoryRetourMenuBtn = document.getElementById('memory-retour-menu');
 
-// Éléments du Quiz
+// Quiz
 const quizScoreEl = document.getElementById('quiz-score');
 const quizTimerEl = document.getElementById('quiz-timer');
 const quizStartButton = document.getElementById('quiz-start-button');
@@ -49,7 +178,7 @@ const quizRetourMenuBtn = document.getElementById('quiz-retour-menu');
 const quizCurrentCardEl = document.getElementById('quiz-current-card');
 const quizMessageEl = document.getElementById('quiz-message');
 
-// Éléments de la Pêche aux Syllabes
+// Syllabe
 const syllabeCompteurEl = document.getElementById('syllabe-compteur');
 const syllabePiocheButton = document.getElementById('syllabe-pioche-button');
 const syllabeRetourMenuBtn = document.getElementById('syllabe-retour-menu');
@@ -57,14 +186,60 @@ const syllabeConsonneEl = document.getElementById('syllabe-consonne');
 const syllabeVoyelleEl = document.getElementById('syllabe-voyelle');
 const syllabeResultatEl = document.getElementById('syllabe-resultat');
 
-// Éléments du Vocabulaire (NOUVEAU)
+// Vocabulaire
 const vocabRetourMenuBtn = document.getElementById('vocab-retour-menu');
+const vocabTablePhrasesBody = document.querySelector('#vocab-table-phrases tbody');
+
 
 // --- 3. FONCTIONS UTILITAIRES GLOBALES ---
 
-/** Mélange un tableau (algorithme Fisher-Yates) */
+/** Change la langue de l'application */
+function setLanguage(lang) {
+    if (lang !== 'fr' && lang !== 'en') return;
+    currentLanguage = lang;
+
+    // Met à jour les boutons de langue
+    langFrButton.classList.toggle('active', lang === 'fr');
+    langEnButton.classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang; // Met à jour l'attribut lang de la page
+
+    // Traduit tous les éléments statiques avec data-lang-key
+    const elementsToTranslate = document.querySelectorAll('[data-lang-key]');
+    elementsToTranslate.forEach(el => {
+        const key = el.dataset.langKey;
+        if (translations[lang][key]) {
+            // Gère les textes dynamiques qui ont un texte par défaut
+            if (el.id === 'memory-paires-trouvees' || el.id === 'quiz-score' || el.id === 'quiz-timer' || el.id === 'syllabe-compteur') {
+                el.textContent = el.dataset.defaultText.replace(/^[a-zA-ZÀ-ú\s]+/, translations[lang][key]);
+            } else {
+                el.textContent = translations[lang][key];
+            }
+        }
+    });
+
+    // Génère dynamiquement la table des phrases du dictionnaire
+    generateVocabPhraseTable();
+}
+
+/** Génère la table des phrases du dictionnaire dans la langue actuelle */
+function generateVocabPhraseTable() {
+    const langData = translations[currentLanguage].vocab_data;
+    vocabTablePhrasesBody.innerHTML = ''; // Vide la table
+    
+    langData.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.h}</td>
+            <td>${item.r}</td>
+            <td>${item.m}</td>
+        `;
+        vocabTablePhrasesBody.appendChild(row);
+    });
+}
+
+/** Mélange un tableau */
 function melanger(array) {
-    const newArray = [...array]; // Crée une copie pour ne pas modifier l'original
+    const newArray = [...array];
     for (let i = newArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
@@ -74,14 +249,9 @@ function melanger(array) {
 
 /** Affiche un écran de jeu et cache les autres */
 function afficherEcran(ecranToShow) {
-    // AJOUT DE ecranVocab à la liste
-    const ecrans = [menuPrincipal, jeuMemory, jeuQuiz, jeuSyllabe, ecranVocab]; 
+    const ecrans = [menuPrincipal, jeuMemory, jeuQuiz, jeuSyllabe, ecranVocab];
     ecrans.forEach(ecran => {
-        if (ecran === ecranToShow) {
-            ecran.classList.remove('hidden');
-        } else {
-            ecran.classList.add('hidden');
-        }
+        ecran.classList.toggle('hidden', ecran !== ecranToShow);
     });
 }
 
@@ -98,7 +268,9 @@ function initialiserMemory() {
     memorySecondeCarte = null;
     memoryVerrouillerPlateau = false;
     plateauJeuMemory.innerHTML = '';
-    memoryPairesTrouveesEl.textContent = `Paires : 0 / ${memoryTotalPaires}`;
+    // Texte dynamique traduit
+    memoryPairesTrouveesEl.textContent = `${translations[currentLanguage].pairs_found} : 0 / ${memoryTotalPaires}`;
+    memoryPairesTrouveesEl.dataset.defaultText = memoryPairesTrouveesEl.textContent; // Met à jour le texte par défaut pour setLanguage
 
     let cartes = [];
     NIVEAU_1_VOYELLES.forEach(paire => {
@@ -112,39 +284,31 @@ function initialiserMemory() {
         const carte = document.createElement('div');
         carte.classList.add('carte');
         carte.dataset.paireId = item.paireId;
-
-        carte.innerHTML = `
-            <div class="face">${item.valeur}</div>
-            <div class="dos">?</div>
-        `;
+        carte.innerHTML = `<div class="face">${item.valeur}</div><div class="dos">?</div>`;
         carte.addEventListener('click', retournerCarteMemory);
         plateauJeuMemory.appendChild(carte);
     });
 }
 
 function retournerCarteMemory() {
-    if (memoryVerrouillerPlateau) return;
-    if (this === memoryPremiereCarte) return;
-
+    if (memoryVerrouillerPlateau || this === memoryPremiereCarte) return;
     this.classList.add('retournee');
 
     if (!memoryPremiereCarte) {
         memoryPremiereCarte = this;
         return;
     }
-
     memorySecondeCarte = this;
     memoryVerrouillerPlateau = true;
-
     verifierPaireMemory();
 }
 
 function verifierPaireMemory() {
     const estUnePaire = memoryPremiereCarte.dataset.paireId === memorySecondeCarte.dataset.paireId;
-
     if (estUnePaire) {
         memoryPairesTrouvees++;
-        memoryPairesTrouveesEl.textContent = `Paires : ${memoryPairesTrouvees} / ${memoryTotalPaires}`;
+        // Texte dynamique traduit
+        memoryPairesTrouveesEl.textContent = `${translations[currentLanguage].pairs_found} : ${memoryPairesTrouvees} / ${memoryTotalPaires}`;
         desactiverCartesMemory();
         verifierFinJeuMemory();
     } else {
@@ -156,14 +320,14 @@ function desactiverCartesMemory() {
     memoryPremiereCarte.removeEventListener('click', retournerCarteMemory);
     secondeCarte.removeEventListener('click', retournerCarteMemory);
     memoryPremiereCarte.classList.add('match');
-    memorySecondeCarte.classList.add('match');
+    secondeCarte.classList.add('match');
     reinitialiserTourMemory();
 }
 
 function cacherCartesMemory() {
     setTimeout(() => {
         memoryPremiereCarte.classList.remove('retournee');
-        memorySecondeCarte.classList.remove('retournee');
+        secondeCarte.classList.remove('retournee');
         reinitialiserTourMemory();
     }, 1000);
 }
@@ -175,7 +339,8 @@ function reinitialiserTourMemory() {
 function verifierFinJeuMemory() {
     if (memoryPairesTrouvees === memoryTotalPaires) {
         setTimeout(() => {
-            alert('Félicitations ! Vous avez maîtrisé le Mémory des Voyelles de Base ! 🎉');
+            // Alerte traduite
+            alert(translations[currentLanguage].memory_congrats);
         }, 500);
     }
 }
@@ -184,31 +349,34 @@ function verifierFinJeuMemory() {
 let quizCartes = [];
 let quizIndexCarteActuelle = 0;
 let quizScore = 0;
-let quizTimer;
-const quizTempsParCarte = 3; // secondes
+const quizTempsParCarte = 3;
 let quizTempsRestant;
 let quizInterval;
 
 function initialiserQuiz() {
     quizScore = 0;
     quizIndexCarteActuelle = 0;
-    quizScoreEl.textContent = `Score : 0`;
-    quizTimerEl.textContent = `Temps : ⌛`;
+    // Textes dynamiques traduits
+    quizScoreEl.textContent = `${translations[currentLanguage].score} : 0`;
+    quizTimerEl.textContent = `${translations[currentLanguage].time_left} : ⌛`;
+    quizScoreEl.dataset.defaultText = quizScoreEl.textContent;
+    quizTimerEl.dataset.defaultText = quizTimerEl.textContent;
+    
     quizMessageEl.textContent = '';
     quizCurrentCardEl.textContent = '?';
     quizStartButton.disabled = false;
-    quizStartButton.textContent = 'Démarrer le Quiz'; // S'assurer que le texte est correct
-    quizCartes = melanger(NIVEAU_1_VOYELLES.map(v => v.hangeul)); // On ne garde que le Hangeul
-    if (quizInterval) clearInterval(quizInterval); // S'assurer qu'aucun timer ne tourne
+    quizStartButton.textContent = translations[currentLanguage].btn_start_quiz;
+    quizCartes = melanger(NIVEAU_1_VOYELLES.map(v => v.hangeul));
+    if (quizInterval) clearInterval(quizInterval);
 }
 
 function demarrerQuiz() {
     quizStartButton.disabled = true;
     quizScore = 0;
     quizIndexCarteActuelle = 0;
-    quizScoreEl.textContent = `Score : 0`;
+    quizScoreEl.textContent = `${translations[currentLanguage].score} : 0`;
     quizMessageEl.textContent = '';
-    quizStartButton.textContent = 'Prochaine carte'; // Changer le texte du bouton
+    quizStartButton.textContent = translations[currentLanguage].btn_next_card;
     prochaineCarteQuiz();
 }
 
@@ -219,50 +387,51 @@ function prochaineCarteQuiz() {
     }
 
     quizCurrentCardEl.textContent = quizCartes[quizIndexCarteActuelle];
-    quizCurrentCardEl.classList.remove('correct', 'incorrect');
     quizMessageEl.textContent = '';
+    quizMessageEl.classList.remove('correct', 'incorrect');
     quizTempsRestant = quizTempsParCarte;
-    quizTimerEl.textContent = `Temps : ${quizTempsRestant}s`;
+    quizTimerEl.textContent = `${translations[currentLanguage].time_left} : ${quizTempsRestant}s`;
 
     if (quizInterval) clearInterval(quizInterval);
     quizInterval = setInterval(() => {
         quizTempsRestant--;
-        quizTimerEl.textContent = `Temps : ${quizTempsRestant}s`;
+        quizTimerEl.textContent = `${translations[currentLanguage].time_left} : ${quizTempsRestant}s`;
         if (quizTempsRestant <= 0) {
             clearInterval(quizInterval);
-            verifierReponseQuiz(null); // Temps écoulé
+            verifierReponseQuiz(null);
         }
     }, 1000);
 }
 
 function verifierReponseQuiz(reponseUtilisateur) {
-    clearInterval(quizInterval); // Arrête le timer
+    clearInterval(quizInterval);
     const carteActuelleHangeul = quizCartes[quizIndexCarteActuelle];
     const paireAttendue = NIVEAU_1_VOYELLES.find(v => v.hangeul === carteActuelleHangeul);
 
-    // Pour l'instant, on simule une réponse correcte pour avancer
+    // Simulation de réponse correcte
     const estCorrect = true; 
 
     if (estCorrect) {
         quizScore++;
-        quizScoreEl.textContent = `Score : ${quizScore}`;
-        quizMessageEl.textContent = `Correct ! C'est "${paireAttendue.roman}"`;
+        quizScoreEl.textContent = `${translations[currentLanguage].score} : ${quizScore}`;
+        // Message traduit
+        quizMessageEl.textContent = `${translations[currentLanguage].quiz_correct} "${paireAttendue.roman}"`;
         quizMessageEl.classList.add('correct');
         quizMessageEl.classList.remove('incorrect');
     } else {
-        // (Ce bloc n'est pas atteint pour l'instant)
-        quizMessageEl.textContent = `Incorrect ! C'était "${paireAttendue.roman}"`;
+        quizMessageEl.textContent = `${translations[currentLanguage].quiz_incorrect} "${paireAttendue.roman}"`;
         quizMessageEl.classList.add('incorrect');
         quizMessageEl.classList.remove('correct');
     }
 
     quizIndexCarteActuelle++;
-    setTimeout(prochaineCarteQuiz, 1500); // Passe à la suivante après un délai
+    setTimeout(prochaineCarteQuiz, 1500);
 }
 
 function finQuiz() {
-    alert(`Quiz terminé ! Votre score final : ${quizScore} / ${quizCartes.length} 🎉`);
-    initialiserQuiz(); // Réinitialise pour un nouveau jeu
+    // Alerte traduite
+    alert(`${translations[currentLanguage].quiz_complete} ${quizScore} / ${quizCartes.length} 🎉`);
+    initialiserQuiz();
 }
 
 // --- 6. LOGIQUE DU MODE PÊCHE AUX SYLLABES ---
@@ -272,7 +441,10 @@ let syllabeVoyellesDisponibles = [];
 
 function initialiserSyllabe() {
     syllabeCompteur = 0;
-    syllabeCompteurEl.textContent = `Syllabes : 0`;
+    // Texte dynamique traduit
+    syllabeCompteurEl.textContent = `${translations[currentLanguage].syllables_built} : 0`;
+    syllabeCompteurEl.dataset.defaultText = syllabeCompteurEl.textContent;
+    
     syllabeConsonnesDisponibles = melanger(NIVEAU_2_CONSONNES.map(c => c.hangeul));
     syllabeVoyellesDisponibles = melanger(NIVEAU_1_VOYELLES.map(v => v.hangeul));
 
@@ -280,35 +452,29 @@ function initialiserSyllabe() {
     syllabeVoyelleEl.textContent = '?';
     syllabeResultatEl.textContent = '?';
 
-    // Afficher une première pioche au démarrage
     piocherSyllabe();
 }
 
 function piocherSyllabe() {
     if (syllabeConsonnesDisponibles.length === 0 || syllabeVoyellesDisponibles.length === 0) {
-        alert("Vous avez épuisé toutes les combinaisons de base ! Recommencez pour de nouvelles syllabes.");
+        // Alerte traduite
+        alert(translations[currentLanguage].syllable_all_drawn);
         initialiserSyllabe();
         return;
     }
 
-    const consonne = syllabeConsonnesDisponibles.shift(); // Prend le premier et le retire
+    const consonne = syllabeConsonnesDisponibles.shift();
     const voyelle = syllabeVoyellesDisponibles.shift();
 
     syllabeConsonneEl.textContent = consonne;
     syllabeVoyelleEl.textContent = voyelle;
 
-    // La formation de la syllabe est simplifiée pour l'affichage
-    let resultat = consonne + voyelle;
-    // Si la consonne est 'ㅇ' au début, elle est muette, donc on affiche juste la voyelle
-    if (consonne === 'ㅇ') {
-        resultat = voyelle;
-    }
+    let resultat = (consonne === 'ㅇ') ? voyelle : (consonne + voyelle);
     syllabeResultatEl.textContent = resultat;
 
     syllabeCompteur++;
-    syllabeCompteurEl.textContent = `Syllabes : ${syllabeCompteur}`;
+    syllabeCompteurEl.textContent = `${translations[currentLanguage].syllables_built} : ${syllabeCompteur}`;
 
-    // On réapprovisionne les cartes si besoin pour continuer à piocher
     if (syllabeConsonnesDisponibles.length === 0) {
         syllabeConsonnesDisponibles = melanger(NIVEAU_2_CONSONNES.map(c => c.hangeul));
     }
@@ -317,59 +483,49 @@ function piocherSyllabe() {
     }
 }
 
+// --- 7. GESTION DES ÉVÉNEMENTS ---
 
-// --- 7. GESTION DES ÉVÉNEMENTS (LIENS ENTRE HTML et JS) ---
+// Sélecteurs de langue
+langFrButton.addEventListener('click', () => setLanguage('fr'));
+langEnButton.addEventListener('click', () => setLanguage('en'));
 
-// --- Menu Principal ---
+// Menu Principal
 btnMemory.addEventListener('click', () => {
     afficherEcran(jeuMemory);
     initialiserMemory();
 });
-
 btnQuiz.addEventListener('click', () => {
     afficherEcran(jeuQuiz);
     initialiserQuiz();
 });
-
 btnSyllabe.addEventListener('click', () => {
     afficherEcran(jeuSyllabe);
     initialiserSyllabe();
 });
-
-btnVocab.addEventListener('click', () => { // NOUVEAU
+btnVocab.addEventListener('click', () => {
     afficherEcran(ecranVocab);
 });
 
-// --- Mémory ---
-memoryResetButton.addEventListener('click', initialiserMemory);
-memoryRetourMenuBtn.addEventListener('click', () => {
-    afficherEcran(menuPrincipal);
+// Boutons "Retour Menu"
+[memoryRetourMenuBtn, quizRetourMenuBtn, syllabeRetourMenuBtn, vocabRetourMenuBtn].forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (quizInterval) clearInterval(quizInterval); // Arrête le timer du quiz si on quitte
+        afficherEcran(menuPrincipal);
+    });
 });
 
-// --- Quiz ---
+// Boutons de jeu
+memoryResetButton.addEventListener('click', initialiserMemory);
 quizStartButton.addEventListener('click', () => {
-    if (quizStartButton.textContent === 'Démarrer le Quiz') {
+    const btnText = translations[currentLanguage].btn_start_quiz;
+    if (quizStartButton.textContent === btnText) {
         demarrerQuiz();
     } else {
-        // Si le quiz est en cours, ce bouton force la vérification (et passe à la suite)
         verifierReponseQuiz('correct_dummy_response');
     }
 });
-quizRetourMenuBtn.addEventListener('click', () => {
-    if (quizInterval) clearInterval(quizInterval); // Arrêter le timer en quittant
-    afficherEcran(menuPrincipal);
-});
-
-// --- Pêche aux Syllabes ---
 syllabePiocheButton.addEventListener('click', piocherSyllabe);
-syllabeRetourMenuBtn.addEventListener('click', () => {
-    afficherEcran(menuPrincipal);
-});
-
-// --- Vocabulaire (NOUVEAU) ---
-vocabRetourMenuBtn.addEventListener('click', () => {
-    afficherEcran(menuPrincipal);
-});
 
 // --- DÉMARRAGE DU JEU ---
-afficherEcran(menuPrincipal); // Affiche le menu au chargement de la page
+setLanguage(currentLanguage); // Applique la langue par défaut au chargement
+afficherEcran(menuPrincipal);
